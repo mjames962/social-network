@@ -7,7 +7,7 @@
         @foreach ($threads as $thread)
     
             <li>
-                <a href="{{ route('threads.show', $thread) }}">{{ $thread->title }}</a>
+                <a href="{{ route('threads.show', $thread->id) }}">{{ $thread->title }}</a>
             </li>
         
         @endforeach

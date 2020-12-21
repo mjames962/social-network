@@ -17,10 +17,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::any('thread', function(){
-    return view('thread');
-});
-
 Route::get('threads', 'ThreadController@index')->name('threads.index');
 
 Route::get('threads/{thread}', 'ThreadController@show')->name('threads.show');

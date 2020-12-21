@@ -46,8 +46,9 @@ class ThreadController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Thread $thread)
+    public function show($id)
     {
+        $thread = Thread::findOrFail($id);
         return view('threads.show', ['thread' => $thread]);
     }
 
