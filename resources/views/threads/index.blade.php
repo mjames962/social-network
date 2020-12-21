@@ -5,7 +5,10 @@
 @section('content')
     <ul>
         @foreach ($threads as $thread)
-            <li>{{ $thread->title }}</li>
+    
+            <li>
+                <a href="{{ route('threads.show', $thread) }}">{{ $thread->title }}</a>
+            </li>
         
         @endforeach
     
