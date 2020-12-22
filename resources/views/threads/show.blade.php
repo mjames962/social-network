@@ -10,10 +10,18 @@
 
     <p>{{ $thread->body }}</p>
 
+    <form action="{{ route('threads.destroy', $thread->id) }}" method="POST">
+        @csrf
+        @method('DELETE')
+        <button type="submit">Delete</button>
+    </form>
+
     @foreach ($thread->comments as $comment)    
-        <br>
-        <p>{{ $comment->created_at }}</p>
-        <p>{{ $comment->body }}</p>
+        <div>
+            <br>
+            <p>{{ $comment->created_at }}</p>
+            <p>{{ $comment->body }}</p>
+        </div>
     @endforeach
 
 @endsection

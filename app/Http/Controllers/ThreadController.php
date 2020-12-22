@@ -94,6 +94,9 @@ class ThreadController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $thread = Thread::findOrFail($id);
+        $thread->delete();
+
+        return redirect()->route('threads.index')->with('message', 'Thread Deleted.');
     }
 }
