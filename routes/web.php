@@ -23,6 +23,6 @@ Route::get('threads/create', 'ThreadController@create')->name('threads.create');
 
 Route::post('threads', 'ThreadController@store')->name('threads.store');
 
-Route::get('threads/{id}', 'ThreadController@show')->name('threads.show');
+Route::get('threads/{thread}', 'ThreadController@show')->name('threads.show');
 
-Route::delete('threads/{id}', 'ThreadController@destroy')->name('threads.destroy');
+Route::delete('threads/{thread}', 'ThreadController@destroy')->name('threads.destroy');

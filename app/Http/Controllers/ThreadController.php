@@ -57,9 +57,8 @@ class ThreadController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Thread $thread)
     {
-        $thread = Thread::findOrFail($id);
         return view('threads.show', ['thread' => $thread]);
     }
 
@@ -92,11 +91,9 @@ class ThreadController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Thread $thread)
     {
-        $thread = Thread::findOrFail($id);
         $thread->delete();
-
         return redirect()->route('threads.index')->with('message', 'Thread Deleted.');
     }
 }
