@@ -3,6 +3,11 @@
 @section('title', 'All Threads')
 
 @section('content')
+    
+    <h2>
+        <a href="{{ route('threads.create')  }}">Create Thread</a>
+    </h2>
+
     <ul>
         @foreach ($threads as $thread)
     

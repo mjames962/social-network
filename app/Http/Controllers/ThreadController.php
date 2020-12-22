@@ -26,7 +26,7 @@ class ThreadController extends Controller
      */
     public function create()
     {
-        //
+        return view('threads.create');
     }
 
     /**
@@ -37,7 +37,18 @@ class ThreadController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validatedData = $request->validate([
+            'title' => 'required|max:50',
+            'body' => 'required|max:255',
+        ]);
+        
+        $t = new Thread;
+        $t->title = $validatedData['title'];
+        $t->body = $validatedData['body'];
+        $t->save();
+
+        session()->flash('message', 'Thread Created.');
+        return redirect()->route('threads.index');
     }
 
     /**
