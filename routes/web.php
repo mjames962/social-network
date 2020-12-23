@@ -26,3 +26,11 @@ Route::post('threads', 'ThreadController@store')->name('threads.store');
 Route::get('threads/{thread}', 'ThreadController@show')->name('threads.show');
 
 Route::delete('threads/{thread}', 'ThreadController@destroy')->name('threads.destroy');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
