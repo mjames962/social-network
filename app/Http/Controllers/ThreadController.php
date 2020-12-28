@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Thread;
+use App\User;
 
 class ThreadController extends Controller
 {
@@ -37,6 +39,14 @@ class ThreadController extends Controller
      */
     public function store(Request $request)
     {
+        
+        if(! Auth::check()) {
+            session()->flash('message', 'Must be logged in to create threads.');
+            return view('auth/login');
+        }
+        
+        $id = auth()->user()->id;
+        
         $validatedData = $request->validate([
             'title' => 'required|max:50',
             'body' => 'required|max:255',
@@ -45,6 +55,7 @@ class ThreadController extends Controller
         $t = new Thread;
         $t->title = $validatedData['title'];
         $t->body = $validatedData['body'];
+        $t->user_id = $id;
         $t->save();
 
         session()->flash('message', 'Thread Created.');

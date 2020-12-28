@@ -18,8 +18,11 @@ class CreateCommentsTable extends Migration
             $table->string('body');
             $table->timestamps();
 
-            $table->bigInteger('thread_id')->unsigned();
+            $table->bigInteger('user_id')->unsigned();
+            $table->foreign('user_id')->references('id')->on('users')
+                ->onDelete('cascade')->onUpdate('cascade');
 
+            $table->bigInteger('thread_id')->unsigned();
             $table->foreign('thread_id')->references('id')->on('threads')
                 ->onDelete('cascade')->onUpdate('cascade');
         });

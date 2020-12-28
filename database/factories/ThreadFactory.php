@@ -9,5 +9,6 @@ $factory->define(Thread::class, function (Faker $faker) {
     return [
         'title' => $faker->realText(50, 1),
         'body' => $faker->realText(250, 1),
+        'user_id' => App\User::inRandomOrder()->first()->id,
     ];
 });

@@ -13,24 +13,30 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Auth::routes();
+
 Route::get('/', function () {
     return view('welcome');
 });
 
 Route::get('threads', 'ThreadController@index')->name('threads.index');
-
 Route::get('threads/create', 'ThreadController@create')->name('threads.create');
-
 Route::post('threads', 'ThreadController@store')->name('threads.store');
-
 Route::get('threads/{thread}', 'ThreadController@show')->name('threads.show');
-
 Route::delete('threads/{thread}', 'ThreadController@destroy')->name('threads.destroy');
 
-Auth::routes();
+Route::group(['middleware' => 'auth', 'prefix' => 'dashboard'], function() {
+
+    //socialnetwork.test/dashboard/... must be logged in
+    Route::get('/', function() {
+        return "user's dashboard";
+    });
+
+});
+
+
+Route::get('users/{user}', 'UserController@show');
 
 Route::get('/home', 'HomeController@index')->name('home');
-
-Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');

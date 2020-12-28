@@ -18,6 +18,10 @@ class CreateThreadsTable extends Migration
             $table->string('title');
             $table->string('body');
             $table->timestamps();
+
+            $table->bigInteger('user_id')->unsigned();
+            $table->foreign('user_id')->references('id')->on('users')
+                ->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

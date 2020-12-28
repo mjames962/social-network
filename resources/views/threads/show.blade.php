@@ -1,25 +1,28 @@
 @extends('layouts.app')
 
-@section('title', 'Thread Number: '. $thread->id . ' ('. $thread->created_at . ')')
+@section('title', 'Thread Number: '. $thread->id)
 
 @section('content')
     
-    <h2>
-       {{ $thread->title }}
-    </h2>
+    <div>
+        <h2>
+        {{ $thread->title }} ({{ $thread->created_at }})
+        </h2>
 
-    <p>{{ $thread->body }}</p>
+        <p>{{ $thread->user->name }}</p>
+        <p>{{ $thread->body }}</p>
 
-    <form action="{{ route('threads.destroy', $thread->id) }}" method="POST">
-        @csrf
-        @method('DELETE')
-        <button type="submit">Delete</button>
-    </form>
-
-    @foreach ($thread->comments as $comment)    
+        <form action="{{ route('threads.destroy', $thread->id) }}" method="POST">
+            @csrf
+            @method('DELETE')
+            <button type="submit">Delete</button>
+        </form>
+    </div>
+    
+        @foreach ($thread->comments as $comment)    
+        <br>
         <div>
-            <br>
-            <p>{{ $comment->created_at }}</p>
+            <p>{{ $comment->user->name }}   -   {{ $comment->created_at }}</p>
             <p>{{ $comment->body }}</p>
         </div>
     @endforeach
