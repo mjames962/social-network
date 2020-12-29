@@ -76,9 +76,9 @@ class CommentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Comment $comment)
     {
-        //
+        return view('comments.edit', ['comment' => $comment]);
     }
 
     /**
@@ -88,9 +88,25 @@ class CommentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Comment $comment)
     {
-        //
+        if (Auth::check() && Auth::id() == $comment->user_id) {
+            
+            $id = auth()->user()->id;
+        
+            $validatedData = $request->validate([
+                'body' => 'required|max:255',
+            ]);
+            
+            $comment->body = $validatedData['body'];
+            $comment->save();
+
+            session()->flash('message', 'Comment Edited.');
+            return redirect()->route('threads.show', $comment->thread);
+        } else {
+            session()->flash('message', 'You can only edit your own threads.');
+            return view('threads.show', ['thread' => $comment->thread]);
+        }
     }
 
     /**
@@ -99,8 +115,16 @@ class CommentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Comment $comment)
     {
-        //
+        $thread = $comment->thread;
+        
+        if (Auth::check() && Auth::id() == $comment->user_id) {
+            $comment->delete();
+            return redirect()->route('threads.show', $thread)->with('message', 'Comment Deleted.');
+        } else {
+            session()->flash('message', 'You can only delete your own comments.');
+            return view('threads.show', ['thread' => $thread]);
+        }
     }
 }

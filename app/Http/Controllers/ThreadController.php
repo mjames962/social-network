@@ -92,7 +92,7 @@ class ThreadController extends Controller
      */
     public function update(Request $request, Thread $thread)
     {
-        if (Auth::id() == $thread->user_id) {
+        if (Auth::check() && Auth::id() == $thread->user_id) {
             
             $id = auth()->user()->id;
         

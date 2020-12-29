@@ -29,16 +29,25 @@
         <div>
             <p>{{ $comment->user->name }}   -   {{ $comment->created_at }}</p>
             <p>{{ $comment->body }}</p>
+
+            @if (Auth::check() && auth()->user()->id == $thread->user_id)
+                <form action="{{ route('comments.edit', $comment) }}" method="GET">
+                    <button type="submit" class="btn btn-primary">Edit</button>
+                </form> 
+        @endif  
+
         </div>
     @endforeach
 
     <br>
 
+    <h4> Comment </h4>
+    
     <form method="POST" action="{{ route('comments.store', $thread) }}">
 
         @csrf
     
-        <p>Body: <textarea name="body" rows="5" cols="40">{{ old('body') }}</textarea></p>
+        <p><textarea name="body" rows="5" cols="40">{{ old('body') }}</textarea></p>
     
         <input type="submit" value="Submit">
     
