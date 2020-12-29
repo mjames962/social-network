@@ -15,10 +15,9 @@ class ThreadController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-        $threads = Thread::all();
-
-        return view('threads.index', ['threads' => $threads]);
+    { 
+        $threads = Thread::paginate(10);
+        return view('threads.index',compact('threads'));
     }
 
     /**

@@ -8,7 +8,7 @@
         <a href="{{ route('threads.create')  }}">Create Thread</a>
     </h2>
 
-    <ul>
+    <ul>        
         @foreach ($threads as $thread)
     
             <li>
@@ -18,5 +18,7 @@
         @endforeach
     
     </ul>
+
+    {!! $threads->links() !!}
 
 @endsection
