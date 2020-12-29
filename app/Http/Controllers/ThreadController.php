@@ -79,9 +79,9 @@ class ThreadController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Thread $thread)
     {
-        //
+        return view('threads.edit', ['thread' => $thread]);
     }
 
     /**
@@ -91,9 +91,27 @@ class ThreadController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Thread $thread)
     {
-        //
+        if (Auth::id() == $thread->user_id) {
+            
+            $id = auth()->user()->id;
+        
+            $validatedData = $request->validate([
+                'title' => 'required|max:50',
+                'body' => 'required|max:255',
+            ]);
+            
+            $thread->title = $validatedData['title'];
+            $thread->body = $validatedData['body'];
+            $thread->save();
+
+            session()->flash('message', 'Thread Edited.');
+            return redirect()->route('threads.show', $thread);
+        } else {
+            session()->flash('message', 'You can only edit your own threads.');
+            return view('threads.show', ['thread' => $thread]);
+        }
     }
 
     /**
@@ -104,7 +122,13 @@ class ThreadController extends Controller
      */
     public function destroy(Thread $thread)
     {
-        $thread->delete();
-        return redirect()->route('threads.index')->with('message', 'Thread Deleted.');
+        if (Auth::id() == $thread->user_id) {
+            $thread->delete();
+            return redirect()->route('threads.index')->with('message', 'Thread Deleted.');
+        } else {
+            session()->flash('message', 'You can only delete your own threads.');
+            return view('threads.show', ['thread' => $thread]);
+        }
+        
     }
 }

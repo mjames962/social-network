@@ -24,6 +24,9 @@ Route::get('threads/create', 'ThreadController@create')->name('threads.create');
 Route::post('threads', 'ThreadController@store')->name('threads.store');
 Route::get('threads/{thread}', 'ThreadController@show')->name('threads.show');
 Route::delete('threads/{thread}', 'ThreadController@destroy')->name('threads.destroy');
+Route::get('/threads/{thread}/edit', 'ThreadController@edit')->name('threads.edit');
+Route::post('/threads/{thread}/edit', 'ThreadController@update')->name('threads.update');
+
 
 Route::group(['middleware' => 'auth', 'prefix' => 'dashboard'], function() {
 
