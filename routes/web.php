@@ -27,6 +27,8 @@ Route::delete('threads/{thread}', 'ThreadController@destroy')->name('threads.des
 Route::get('/threads/{thread}/edit', 'ThreadController@edit')->name('threads.edit');
 Route::post('/threads/{thread}/edit', 'ThreadController@update')->name('threads.update');
 
+Route::post('threads/{thread}', 'CommentController@store')->name('comments.store');
+
 
 Route::group(['middleware' => 'auth', 'prefix' => 'dashboard'], function() {
 

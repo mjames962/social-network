@@ -12,7 +12,7 @@
         <p>{{ $thread->user->name }}</p>
         <p>{{ $thread->body }}</p>
 
-        @if (auth()->user()->id == $thread->user_id)
+        @if (Auth::check() && auth()->user()->id == $thread->user_id)
             <form action="{{ route('threads.edit', $thread->id) }}" method="GET">
                 <button type="submit" class="btn btn-primary">Edit</button>
             </form> 
@@ -31,5 +31,19 @@
             <p>{{ $comment->body }}</p>
         </div>
     @endforeach
+
+    <br>
+
+    <form method="POST" action="{{ route('comments.store', $thread) }}">
+
+        @csrf
+    
+        <p>Body: <textarea name="body" rows="5" cols="40">{{ old('body') }}</textarea></p>
+    
+        <input type="submit" value="Submit">
+    
+        <a href="{{ route('threads.show', $thread) }}">Cancel</a>
+    
+    </form>
 
 @endsection
