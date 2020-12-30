@@ -39,20 +39,26 @@
         </div>
     @endforeach
 
-    <br>
+    
 
-    <h4> Comment </h4>
-    
-    <form method="POST" action="{{ route('comments.store', $thread) }}">
+    @if (Auth::check())  
+        <br>
+        <div>
+            <h4> Comment </h4>
+            
+            <form method="POST" action="{{ route('comments.store', $thread) }}">
 
-        @csrf
-    
-        <p><textarea name="body" rows="5" cols="40">{{ old('body') }}</textarea></p>
-    
-        <input type="submit" value="Submit">
-    
-        <a href="{{ route('threads.show', $thread) }}">Cancel</a>
-    
-    </form>
+                @csrf
+            
+                <p><textarea name="body" rows="5" cols="40">{{ old('body') }}</textarea></p>
+            
+                <input type="submit" value="Submit">
+            
+                <a href="{{ route('threads.show', $thread) }}">Cancel</a>
+            
+            </form>
+        </div>
+    @endif
 
+    
 @endsection

@@ -8,7 +8,7 @@
 
     @csrf
 
-    <p>Body: <textarea name="body" rows="5" cols="40">{{ $comment->body }}</textarea></p>
+    <p><textarea name="body" rows="5" cols="40">{{ $comment->body }}</textarea></p>
 
     <input type="submit" class ="btn btn-primary" value="Submit">
 
