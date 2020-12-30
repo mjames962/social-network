@@ -30,7 +30,7 @@
             <p>{{ $comment->user->name }}   -   {{ $comment->created_at }}</p>
             <p>{{ $comment->body }}</p>
 
-            @if (Auth::check() && auth()->user()->id == $thread->user_id)
+            @if (Auth::check() && auth()->user()->id == $comment->user_id)
                 <form action="{{ route('comments.edit', $comment) }}" method="GET">
                     <button type="submit" class="btn btn-primary">Edit</button>
                 </form> 
@@ -60,5 +60,5 @@
         </div>
     @endif
 
-    
+
 @endsection
