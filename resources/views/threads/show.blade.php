@@ -12,16 +12,18 @@
         <p>{{ $thread->user->name }}</p>
         <p>{{ $thread->body }}</p>
 
-        @if (Auth::check() && auth()->user()->id == $thread->user_id)
-            <form action="{{ route('threads.edit', $thread->id) }}" method="GET">
-                <button type="submit" class="btn btn-primary">Edit</button>
-            </form> 
-            <form action="{{ route('threads.destroy', $thread->id) }}" method="POST">
-                @csrf
-                @method('DELETE')
-                <button type="submit" class="btn btn-secondary">Delete</button>
-            </form>
-        @endif  
+        @if(Auth::check())
+            @if (auth()->user()->hasAdminProfile || auth()->user()->id == $thread->user_id)
+                <form action="{{ route('threads.edit', $thread->id) }}" method="GET">
+                    <button type="submit" class="btn btn-primary">Edit</button>
+                </form> 
+                <form action="{{ route('threads.destroy', $thread->id) }}" method="POST">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="btn btn-secondary">Delete</button>
+                </form>
+            @endif
+        @endif
     </div>
     
         @foreach ($thread->comments as $comment)    
@@ -30,11 +32,13 @@
             <p>{{ $comment->user->name }}   -   {{ $comment->created_at }}</p>
             <p>{{ $comment->body }}</p>
 
-            @if (Auth::check() && auth()->user()->id == $comment->user_id)
-                <form action="{{ route('comments.edit', $comment) }}" method="GET">
-                    <button type="submit" class="btn btn-primary">Edit</button>
-                </form> 
-        @endif  
+            @if(Auth::check())
+                @if (auth()->user()->hasAdminProfile || auth()->user()->id == $comment->user_id)
+                    <form action="{{ route('comments.edit', $comment) }}" method="GET">
+                        <button type="submit" class="btn btn-primary">Edit</button>
+                    </form> 
+                @endif
+            @endif
 
         </div>
     @endforeach

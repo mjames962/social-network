@@ -19,6 +19,21 @@ class User extends Authenticatable
    {
     return $this->hasMany('App\Comment');
    }
+
+   public function profile()
+   {
+       return $this->morphTo();
+   }
+
+   public function getHasAdminProfileAttribute()
+  {
+    return $this->profile_type == 'App\AdminProfile';
+  }
+  
+  public function getHasUserProfileAttribute()
+  {
+    return $this->profile_type == 'App\UserProfile';
+  }
    
    
     /**
@@ -46,5 +61,9 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+    ];
+
+    protected $with = [
+        'profile'
     ];
 }
