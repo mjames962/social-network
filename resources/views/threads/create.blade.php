@@ -12,6 +12,8 @@
 
     <p>Body: <textarea name="body" rows="5" cols="40">{{ old('body') }}</textarea></p>
 
+    <p>Tags: <input type="text" name="tagstring" value="{{ old('tagstring') }}"></p>
+
     <input type="submit" value="Submit">
 
     <a href="{{ route('threads.index') }}">Cancel</a>

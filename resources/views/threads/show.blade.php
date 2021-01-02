@@ -9,6 +9,12 @@
         {{ $thread->title }} ({{ $thread->created_at }})
         </h2>
 
+        <h4>
+            @foreach ($thread->tags as $tag)
+                {{ $tag->name }},      
+            @endforeach  
+        </h4>
+
         <p>{{ $thread->user->name }}</p>
         <p>{{ $thread->body }}</p>
 

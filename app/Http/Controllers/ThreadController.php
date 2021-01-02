@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Thread;
 use App\User;
+use App\Tag;
 
 class ThreadController extends Controller
 {
@@ -46,6 +47,9 @@ class ThreadController extends Controller
         
         $id = auth()->user()->id;
         
+        $tags = $request->tagstring;
+        $tagArray = explode(',', $tags);
+        
         $validatedData = $request->validate([
             'title' => 'required|max:50',
             'body' => 'required|max:255',
@@ -56,6 +60,13 @@ class ThreadController extends Controller
         $t->body = $validatedData['body'];
         $t->user_id = $id;
         $t->save();
+
+        foreach ($tagArray as $string) {
+            if($string !== "") {
+                $tag = Tag::create(['name' => $string]);
+                $t->tags()->save($tag);
+            }   
+        }
 
         session()->flash('message', 'Thread Created.');
         return redirect()->route('threads.index');
