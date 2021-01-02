@@ -70,8 +70,16 @@ class ThreadController extends Controller
 
         foreach ($tagArray as $string) {
             if($string !== "") {
-                $tag = Tag::create(['name' => $string]);
-                $t->tags()->save($tag);
+                
+                $targetTag = Tag::where('name', '=', $string)->first();
+                
+                if($targetTag === null) {
+                    $tag = Tag::create(['name' => $string]);
+                    $t->tags()->save($tag);
+                } else {
+                    $t->tags()->save($targetTag);
+                }
+                
             }   
         }
 

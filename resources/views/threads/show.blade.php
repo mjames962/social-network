@@ -10,12 +10,15 @@
         </h2>
 
         <h4>
-            @foreach ($thread->tags as $tag)
-                {{ $tag->name }},      
-            @endforeach  
+            @if ($thread->tags->first() != null)
+                Tags: 
+                @foreach ($thread->tags as $tag)
+                    {{ $tag->name }},      
+                @endforeach   
+            @endif     
         </h4>
 
-        <p>{{ $thread->user->name }}</p>
+        <p>Posted by {{ $thread->user->name }}</p>
         <p>
             @if ($thread->image != null)
                 <img src="{{ asset('/storage/images/'.$thread->image) }}" alt="{{ $thread->image }}" width="200" />
@@ -26,14 +29,12 @@
 
         @if(Auth::check())
             @if (auth()->user()->hasAdminProfile || auth()->user()->id == $thread->user_id)
-                <form action="{{ route('threads.edit', $thread->id) }}" method="GET">
-                    <button type="submit" class="btn btn-primary">Edit</button>
-                </form> 
-                <form action="{{ route('threads.destroy', $thread->id) }}" method="POST">
-                    @csrf
-                    @method('DELETE')
-                    <button type="submit" class="btn btn-secondary">Delete</button>
-                </form>
+                    <form action="{{ route('threads.destroy', $thread->id) }}" method="POST">
+                        @csrf
+                        <a href="{{ route('threads.edit', $thread) }}">Edit</a>
+                        @method('DELETE')
+                        <button type="submit">Delete</button>
+                    </form>
             @endif
         @endif
     </div>
