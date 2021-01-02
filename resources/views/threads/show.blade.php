@@ -16,7 +16,13 @@
         </h4>
 
         <p>{{ $thread->user->name }}</p>
-        <p>{{ $thread->body }}</p>
+        <p>
+            @if ($thread->image != null)
+                <img src="{{ asset('/storage/images/'.$thread->image) }}" alt="{{ $thread->image }}" width="200" />
+            @endif
+            
+            {{ $thread->body }}
+        </p>
 
         @if(Auth::check())
             @if (auth()->user()->hasAdminProfile || auth()->user()->id == $thread->user_id)

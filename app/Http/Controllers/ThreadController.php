@@ -59,6 +59,13 @@ class ThreadController extends Controller
         $t->title = $validatedData['title'];
         $t->body = $validatedData['body'];
         $t->user_id = $id;
+        
+        if($request->hasFile('image')) {
+           $filename = $request->image->getClientOriginalName();
+           $request->image->storeAs('images', $filename, 'public');
+           $t->image = $filename;
+        }
+        
         $t->save();
 
         foreach ($tagArray as $string) {

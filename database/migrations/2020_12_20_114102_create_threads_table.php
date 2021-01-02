@@ -17,6 +17,7 @@ class CreateThreadsTable extends Migration
             $table->id();
             $table->string('title');
             $table->string('body');
+            $table->string('image')->nullable();
             $table->timestamps();
 
             $table->bigInteger('user_id')->unsigned();
