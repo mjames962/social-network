@@ -90,7 +90,7 @@ class CommentController extends Controller
      */
     public function update(Request $request, Comment $comment)
     {
-        if (Auth::check() && Auth::id() == $comment->user_id) {
+        if (Auth::check() && (Auth::id() == $comment->user_id || auth()->user()->hasAdminProfile)) {
             
             $id = auth()->user()->id;
         
@@ -119,7 +119,7 @@ class CommentController extends Controller
     {
         $thread = $comment->thread;
         
-        if (Auth::check() && Auth::id() == $comment->user_id) {
+        if (Auth::check() && (Auth::id() == $comment->user_id || auth()->user()->hasAdminProfile)) {
             $comment->delete();
             return redirect()->route('threads.show', $thread)->with('message', 'Comment Deleted.');
         } else {

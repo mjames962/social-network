@@ -118,7 +118,7 @@ class ThreadController extends Controller
      */
     public function update(Request $request, Thread $thread)
     {
-        if (Auth::check() && Auth::id() == $thread->user_id) {
+        if (Auth::check() && (Auth::id() == $thread->user_id || auth()->user()->hasAdminProfile)) {
             
             $id = auth()->user()->id;
         
@@ -147,7 +147,7 @@ class ThreadController extends Controller
      */
     public function destroy(Thread $thread)
     {
-        if (Auth::id() == $thread->user_id) {
+        if (Auth::check() && (Auth::id() == $thread->user_id || auth()->user()->hasAdminProfile)) {
             $thread->delete();
             return redirect()->route('threads.index')->with('message', 'Thread Deleted.');
         } else {
