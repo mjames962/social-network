@@ -10,5 +10,6 @@ $factory->define(Thread::class, function (Faker $faker) {
         'title' => $faker->realText(50, 1),
         'body' => $faker->realText(250, 1),
         'user_id' => App\User::inRandomOrder()->first()->id,
+        'image' => $faker->image('public/storage/images',640,480, null, false),
     ];
 });

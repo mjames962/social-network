@@ -19,7 +19,7 @@
                     <p>Posted by {{ $thread->user->name }}</p>
                     <p>
                         @if ($thread->image != null)
-                            <img src="{{ asset('/storage/images/'.$thread->image) }}" alt="{{ $thread->image }}" width="200" />
+                            <img src="/storage/images/{{ $thread->image }}" alt="{{ $thread->image }}" width="200" />
                         @endif
                     </p>
                     {{ $thread->body }}
