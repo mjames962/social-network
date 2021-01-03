@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Route;
 Auth::routes();
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect('/threads');
 });
 
 Route::get('threads', 'ThreadController@index')->name('threads.index');
@@ -31,20 +31,5 @@ Route::post('threads/{thread}', 'CommentController@store')->name('comments.store
 Route::delete('comment/{comment}/edit', 'CommentController@destroy')->name('comments.destroy');
 Route::get('/comment/{comment}/edit', 'CommentController@edit')->name('comments.edit');
 Route::post('/comment/{comment}/edit', 'CommentController@update')->name('comments.update');
-
-
-Route::group(['middleware' => 'auth', 'prefix' => 'dashboard'], function() {
-
-    //socialnetwork.test/dashboard/... must be logged in
-    Route::get('/', function() {
-        return "user's dashboard";
-    });
-
-});
-
-
-Route::get('users/{user}', 'UserController@show');
-
-Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/home', 'HomeController@index')->name('home');
