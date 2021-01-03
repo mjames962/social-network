@@ -4,21 +4,24 @@
 
 @section('content')
     
-    <h2>
-        <a href="{{ route('threads.create')  }}">Create Thread</a>
-    </h2>
+    <div class="row justify-content-center">
+        <h2>
+            <a href="{{ route('threads.create')  }}">Create Thread</a>
+        </h2>
+    </div>
 
-    <ul>        
-        @foreach ($threads as $thread)
-    
-            <li>
-                <a href="{{ route('threads.show', $thread->id) }}">{{ $thread->title }}</a>
-            </li>
-        
-        @endforeach
-    
-    </ul>
+    <div class="row justify-content-center">
+        <ul>        
+            @foreach ($threads as $thread)
+                <li>
+                    <a href="{{ route('threads.show', $thread->id) }}">{{ $thread->title }}</a>
+                </li>
+            @endforeach
+        </ul>
+    </div>
 
-    {!! $threads->links() !!}
+    <div class="row justify-content-center">    
+        {!! $threads->links() !!}
+    </div>
 
 @endsection
